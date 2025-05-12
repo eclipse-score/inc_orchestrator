@@ -1,0 +1,62 @@
+# *******************************************************************************
+# Copyright (c) 2025 Contributors to the Eclipse Foundation
+#
+# See the NOTICE file(s) distributed with this work for additional
+# information regarding copyright ownership.
+#
+# This program and the accompanying materials are made available under the
+# terms of the Apache License Version 2.0 which is available at
+# https://www.apache.org/licenses/LICENSE-2.0
+#
+# SPDX-License-Identifier: Apache-2.0
+# *******************************************************************************
+module(
+    name = "inc_orchestrator",
+    version = "1.0",
+)
+
+bazel_dep(name = "rules_python", version = "1.0.0")
+
+PYTHON_VERSION = "3.12"
+
+python = use_extension("@rules_python//python/extensions:python.bzl", "python")
+python.toolchain(
+    is_default = True,
+    python_version = PYTHON_VERSION,
+)
+use_repo(python)
+
+# Add GoogleTest dependency
+bazel_dep(name = "googletest", version = "1.14.0")
+
+# Rust rules for Bazel
+bazel_dep(name = "rules_rust", version = "0.56.0")
+
+# Checker rule for CopyRight checks/fixs
+bazel_dep(name = "score_cr_checker", version = "0.2.2")
+bazel_dep(name = "score_python_basics", version = "0.3.0")
+bazel_dep(name = "score_starpls_lsp", version = "0.1.0")
+
+# C/C++ rules for Bazel
+bazel_dep(name = "rules_cc", version = "0.1.1")
+
+# LLVM Toolchains Rules - host configuration
+bazel_dep(name = "toolchains_llvm", version = "1.2.0")
+
+llvm = use_extension("@toolchains_llvm//toolchain/extensions:llvm.bzl", "llvm")
+llvm.toolchain(
+    cxx_standard = {"": "c++17"},
+    llvm_version = "19.1.0",
+)
+use_repo(llvm, "llvm_toolchain")
+use_repo(llvm, "llvm_toolchain_llvm")
+
+register_toolchains("@llvm_toolchain//:all")
+
+# Dash license checker
+bazel_dep(name = "score_dash_license_checker", version = "0.1.1")
+
+# Format checker
+bazel_dep(name = "score_format_checker", version = "0.1.1")
+bazel_dep(name = "aspect_rules_lint", version = "1.0.3")
+bazel_dep(name = "buildifier_prebuilt", version = "7.3.1")
