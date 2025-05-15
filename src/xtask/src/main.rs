@@ -165,6 +165,8 @@ fn check_license_header() {
         for file in missing_header_files {
             println!("{}", file.display());
         }
+
+        std::process::exit(-1);
     }
 }
 

@@ -15,3 +15,6 @@ tracing-subscriber.workspace = true
 
 [dev-dependencies]
 testing.workspace = true
+
+[lints.rust]
+unexpected_cfgs = { level = "warn", check-cfg = ['cfg(orch_tracing)'] }
