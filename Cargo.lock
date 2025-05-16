@@ -342,6 +342,7 @@ dependencies = [
  "iceoryx2-bb-threadsafe",
  "iceoryx2-pal-concurrency-sync",
  "loom",
+ "testing",
  "tracing",
  "tracing-subscriber",
 ]
