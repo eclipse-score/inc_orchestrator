@@ -1,0 +1,6 @@
+[build]
+rustflags = ["-D", "warnings"] # treat compiler warnings as errors
+
+
+[alias]
+xtask = "run -p xtask --"

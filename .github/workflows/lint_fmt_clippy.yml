@@ -1,0 +1,48 @@
+name: rustfmt and clippy check
+
+on:
+  pull_request:
+    branches: [main, development]
+    types: [opened, ready_for_review, reopened, synchronize]
+
+jobs:
+  lint-fmt-clippy:
+    timeout-minutes: 6 # 6 minutes is the maximum allowed for a cold run
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Install protoc
+        uses: arduino/setup-protoc@v3
+
+      - name: Cache Cargo registry, git deps & target
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            target
+          key: ${{ runner.os }}-cargo-lint-fmt-clippy-${{ hashFiles('**/Cargo.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-cargo-lint-fmt-clippy-
+
+      - name: Install Rust toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          override: true
+          components: rustfmt, clippy
+
+      - name: check code format (rustfmt)
+        uses: actions-rs/cargo@v1
+        with:
+          command: fmt
+          args: -- --check
+
+      - name: check clippy errors (without warnings)
+        uses: actions-rs/cargo@v1
+        with:
+          command: clippy
+          args: -- -D warnings

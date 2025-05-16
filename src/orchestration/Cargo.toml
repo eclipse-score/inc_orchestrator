@@ -1,0 +1,17 @@
+[package]
+name = "orchestration"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
+async_runtime.workspace = true
+foundation.workspace = true
+
+iceoryx2.workspace = true
+libc.workspace = true
+logging_tracing.workspace = true
+tracing.workspace = true
+tracing-subscriber.workspace = true
+
+[dev-dependencies]
+testing.workspace = true

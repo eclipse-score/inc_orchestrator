@@ -1,0 +1,46 @@
+# Available rules:
+#
+#   T1: title-max-length
+#   T2: title-trailing-whitespace
+#   T3: title-trailing-punctuation (disabled)
+#   T4: title-hard-tab
+#   T5: title-must-not-contain-word (disabled)
+#   T6: title-leading-whitespace
+#   T7: title-match-regex
+#   B1: body-max-line-length (disabled)
+#   B2: body-trailing-whitespace
+#   B3: body-hard-tab
+#   B4: body-first-line-empty
+#   B5: body-min-length (disabled)
+#   B6: body-is-missing
+#   B7: body-changed-file-mention (disabled)
+#
+# See http://jorisroovers.github.io/gitlint/rules/ for a full description of the rules.
+# The tool gitlint is used to check the compliance with the rules described here: https://github.com/qorix-group/performance_stack_rust/blob/main/.gitlint
+# Example of correct git message:
+#
+# docs: Add new .rst file for user guide
+#
+# Added a reStructuredText file to document the user guide section.
+# Includes an overview, setup instructions, and usage examples.
+
+
+# Ignore some default rules and enable regex style searching
+[general]
+ignore=T3,T5,B1,B5,B7
+regex-style-search=true
+
+# Maximum length of the title
+[title-max-length]
+line-length=72
+
+# Title must follow format <prefix_name>: Summary . eg.: bazel: Test Requirement SWS_CM_00001
+[title-match-regex]
+regex=^[a-z_-]+: .+$
+
+# First line of the commit message body must be empty. (second line of the commit message)
+[body-first-line-empty]
+
+#Ignores the title if it starts with Revert or Merge
+[ignore-by-title]
+regex=(^Revert |^Merge )

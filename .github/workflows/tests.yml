@@ -1,0 +1,29 @@
+name: Bazel Tests
+
+on:
+  pull_request:
+    types: [opened, reopened, synchronize]
+  merge_group:
+    types: [checks_requested]
+
+jobs:
+  setup-and-run-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4.2.2
+
+      - name: Install protoc
+        uses: arduino/setup-protoc@v3
+
+      - name: Setup Bazel with shared caching
+        uses: bazel-contrib/setup-bazel@0.14.0
+        with:
+          disk-cache: true
+          repository-cache: true
+          bazelisk-cache: true
+
+      - name: Run Tests via Bazel
+        run: |
+          echo "Running: bazel test //src/..."
+          bazel test //src/...

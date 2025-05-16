@@ -1,0 +1,47 @@
+[workspace]
+resolver = "2"
+members=[
+    "src/foundation",
+    "src/async_runtime",
+    "src/orchestration",
+    "src/logging_tracing",
+    "src/xtask",
+    "src/testing",
+]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+
+[workspace.dependencies]
+async_runtime = { path = "src/async_runtime" }
+foundation = { path = "src/foundation" }
+logging_tracing = { path = "src/logging_tracing" }
+orchestration = { path = "src/orchestration" }
+testing = { path = "src/testing" }
+xtask = { path = "src/xtask" }
+
+iceoryx2 = { git = "https://github.com/qorix-group/iceoryx2.git", branch = "iox2-682-vec-fix-miri" }
+iceoryx2-bb-container = { git = "https://github.com/qorix-group/iceoryx2.git", branch = "iox2-682-vec-fix-miri" }
+iceoryx2-bb-derive-macros = { git = "https://github.com/qorix-group/iceoryx2.git", branch = "iox2-682-vec-fix-miri" }
+iceoryx2-bb-elementary = { git = "https://github.com/qorix-group/iceoryx2.git", branch = "iox2-682-vec-fix-miri" }
+iceoryx2-bb-lock-free = { git = "https://github.com/qorix-group/iceoryx2.git", branch = "iox2-682-vec-fix-miri" }
+iceoryx2-bb-memory = { git = "https://github.com/qorix-group/iceoryx2.git", branch = "iox2-682-vec-fix-miri" }
+iceoryx2-bb-posix = { git = "https://github.com/qorix-group/iceoryx2.git", branch = "iox2-682-vec-fix-miri" }
+iceoryx2-bb-system-types = { git = "https://github.com/qorix-group/iceoryx2.git", branch = "iox2-682-vec-fix-miri" }
+iceoryx2-bb-testing = { git = "https://github.com/qorix-group/iceoryx2.git", branch = "iox2-682-vec-fix-miri" }
+iceoryx2-bb-threadsafe = { git = "https://github.com/qorix-group/iceoryx2.git", branch = "iox2-682-vec-fix-miri" }
+iceoryx2-pal-concurrency-sync = { git = "https://github.com/qorix-group/iceoryx2.git", branch = "iox2-682-vec-fix-miri" }
+libc = "0.2.171"
+tracing = "0.1.41"
+tracing-appender = "0.2.3"
+tracing-subscriber = { version = "0.3.19", features = ["env-filter"] }
+tracing-perfetto-sdk-layer = "0.12.0"
+tracing-perfetto-sdk-schema = "0.12.0"
+tracing-perfetto-sdk-sys = "0.12.0"
+
+[patch.crates-io]
+# Use Qorix-forked version due to lack of Bazel support
+tracing-perfetto-sdk-layer = { git = "https://github.com/qorix-group/tracing-perfetto-sdk.git", rev = "e27f6fc5bbad0c8cdf0c2c37b43e955467187199" }
+tracing-perfetto-sdk-schema = { git = "https://github.com/qorix-group/tracing-perfetto-sdk.git", rev = "e27f6fc5bbad0c8cdf0c2c37b43e955467187199" }
+tracing-perfetto-sdk-sys = { git = "https://github.com/qorix-group/tracing-perfetto-sdk.git", rev = "e27f6fc5bbad0c8cdf0c2c37b43e955467187199" }

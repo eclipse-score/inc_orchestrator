@@ -1,0 +1,30 @@
+name: 'Setup Rust Build Environment'
+description: 'Checks out code, installs protoc, and caches cargo dependencies'
+
+runs:
+  using: "composite"
+  steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+
+    - name: Install protoc
+      uses: arduino/setup-protoc@v3
+
+    - name: Cache cargo & target
+      uses: actions/cache@v3
+      with:
+        path: |
+          ~/.cargo/registry
+          ~/.cargo/git
+          target
+          ~/.cargo/bin
+        key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+        restore-keys: "${{ runner.os }}-cargo- \n#magic___^_^___line\n"
+    - name: Install cargo-tarpaulin if not already installed
+      run: |
+        if ! command -v cargo-tarpaulin > /dev/null; then
+          cargo install cargo-tarpaulin
+        else
+          echo "cargo-tarpaulin is already installed"
+        fi
+      shell: bash

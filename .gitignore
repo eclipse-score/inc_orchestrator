@@ -54,3 +54,15 @@ styles/
 .venv
 __pycache__/
 /.coverage
+
+debug/
+target/
+/build/
+
+*~
+.*swp
+.*swo
+
+#vscode
+.vscode*
+*.orig

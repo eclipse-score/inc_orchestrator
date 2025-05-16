@@ -1,0 +1,73 @@
+name: cargo build, test, coverage and miri report
+
+on:
+  push:
+    branches: [main, development]
+  pull_request:
+    branches: [main, development]
+    types: [opened, ready_for_review, reopened, synchronize]
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  cargo-checks:
+    #permissions for docs deployment
+    permissions:
+      contents: write
+      pages: write
+      id-token: write
+    runs-on: ubuntu-latest
+    timeout-minutes: 25 # minutes is the maximum allowed for a cold run
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Rust Build Environment
+        uses: ./.github/actions/setup-rust-build
+
+      # ---------- BUILD ----------
+      - name: Cargo build
+        run: cargo build --verbose
+
+      # ---------- TARPAULIN(TEST + COVERAGE) ----------
+      - name: Run tests under coverage
+        run: cargo tarpaulin --skip-clean --out Html
+
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: tarpaulin-report.html
+
+      # ---------- MIRI ----------
+      - name: Install nightly + miri (minimal profile)
+        uses: actions-rs/toolchain@v1
+        if: github.event.pull_request.draft == false
+        with:
+          toolchain: nightly
+          profile: minimal
+          components: miri
+          override: true
+
+      - name: Prefetch crates for nightly
+        if: github.event.pull_request.draft == false
+        run: cargo +nightly fetch --locked
+
+      - name: Run Miri and save report
+        if: github.event.pull_request.draft == false
+        run: |
+          set -o pipefail
+          cargo +nightly miri test --workspace \
+          -- --skip test_mt_one_pop_one_stealer \
+             --skip test_mt_one_push_mpmc_one_stealer \
+             --skip test_one_producer_multi_stealer_mt_thread \
+             --skip test_one_producer_one_stealer_mt_thread \
+          2>&1 | tee miri_report.txt
+
+      # ---------- LOOM ----------
+      - name: Run Atomic tests with LOOM
+        if: github.event.pull_request.draft == false
+        run: |
+          set -o pipefail
+          cargo xtask build:loom

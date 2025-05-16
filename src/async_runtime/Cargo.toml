@@ -1,0 +1,18 @@
+[package]
+name = "async_runtime"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
+foundation.workspace = true
+
+iceoryx2-pal-concurrency-sync.workspace = true
+
+[target.'cfg(loom)'.dependencies]
+loom = { version = "0.7", features = ["checkpoint"] }
+
+ [lints.rust]
+unexpected_cfgs = { level = "warn", check-cfg = ['cfg(loom)'] }
+
+[dev-dependencies]
+testing.workspace = true

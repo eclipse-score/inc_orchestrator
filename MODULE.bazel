@@ -60,3 +60,27 @@ bazel_dep(name = "score_dash_license_checker", version = "0.1.1")
 bazel_dep(name = "score_format_checker", version = "0.1.1")
 bazel_dep(name = "aspect_rules_lint", version = "1.0.3")
 bazel_dep(name = "buildifier_prebuilt", version = "7.3.1")
+
+# Module deps
+
+rust = use_extension("@rules_rust//rust:extensions.bzl", "rust")
+rust.toolchain(
+    edition = "2021",
+    versions = ["1.85.0"],
+)
+
+crate = use_extension("@rules_rust//crate_universe:extensions.bzl", "crate")
+crate.from_cargo(
+    name = "crates",
+    cargo_lockfile = "//:Cargo.lock",
+    manifests = [
+        "//:Cargo.toml",
+        "//:src/foundation/Cargo.toml",
+        "//:src/async_runtime/Cargo.toml",
+        "//:src/logging_tracing/Cargo.toml",
+        "//:src/orchestration/Cargo.toml",
+        "//:src/testing/Cargo.toml",
+        "//:src/xtask/Cargo.toml",
+    ],
+)
+use_repo(crate, "crates")

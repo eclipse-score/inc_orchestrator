@@ -10,23 +10,20 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
+load("@crates//:defs.bzl", "all_crate_deps")
+load("@rules_rust//rust:defs.bzl", "rust_library", "rust_test")
 
-name: License check preparation
-on:
-  pull_request_target:
-    types: [opened, reopened, synchronize]
-  merge_group:
-    types: [checks_requested]
+rust_library(
+    name = "libfoundation",
+    srcs = glob(["src/**/*.rs"]),
+    crate_name = "foundation",
+    visibility = ["//visibility:public"],
+    deps = all_crate_deps(
+        normal = True,
+    ),
+)
 
-permissions:
-  pull-requests: write
-  issues: write
-
-jobs:
-  license-check:
-    if: ${{ github.repository == 'eclipse-score/inc_orchestrator' }}
-    uses: eclipse-score/cicd-workflows/.github/workflows/license-check.yml@main
-    with:
-      repo-url: "${{ github.server_url }}/${{ github.repository }}"
-    secrets:
-      dash-api-token: ${{ secrets.ECLIPSE_GITLAB_API_TOKEN }}
+rust_test(
+    name = "tests",
+    crate = ":libfoundation",
+)

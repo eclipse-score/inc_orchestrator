@@ -51,3 +51,7 @@ copyright_checker(
 
 # Add target for formatting checks
 use_format_targets()
+
+exports_files([
+    "MODULE.bazel",
+])
