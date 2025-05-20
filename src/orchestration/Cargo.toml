@@ -8,6 +8,7 @@ async_runtime.workspace = true
 foundation.workspace = true
 
 iceoryx2.workspace = true
+iceoryx2-bb-container.workspace = true
 libc.workspace = true
 logging_tracing.workspace = true
 tracing.workspace = true

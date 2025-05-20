@@ -798,6 +798,7 @@ dependencies = [
  "async_runtime",
  "foundation",
  "iceoryx2",
+ "iceoryx2-bb-container",
  "libc",
  "logging_tracing",
  "testing",

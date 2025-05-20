@@ -11,4 +11,5 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
+pub mod orch_tag;
 pub mod tag;

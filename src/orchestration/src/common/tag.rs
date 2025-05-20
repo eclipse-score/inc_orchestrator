@@ -16,6 +16,7 @@ use std::fmt::{Debug, Formatter};
 ///
 /// Tag implementation with an 'id' and 'tracing info string'. Supports creation of Tag from &str and String, also from_str_ref().
 ///
+#[derive(Clone, Copy)]
 pub struct Tag {
     id: u64,
     tracing_str: &'static str,
