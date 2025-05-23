@@ -342,6 +342,7 @@ dependencies = [
  "iceoryx2-bb-threadsafe",
  "iceoryx2-pal-concurrency-sync",
  "loom",
+ "testing",
  "tracing",
  "tracing-subscriber",
 ]
@@ -798,6 +799,7 @@ dependencies = [
  "async_runtime",
  "foundation",
  "iceoryx2",
+ "iceoryx2-bb-container",
  "libc",
  "logging_tracing",
  "testing",

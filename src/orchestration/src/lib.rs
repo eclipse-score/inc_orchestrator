@@ -12,6 +12,7 @@
 //
 
 pub mod actions;
+pub mod common;
 pub mod core;
 pub mod prelude;
 pub mod program;

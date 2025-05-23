@@ -101,7 +101,7 @@ mod tests {
     use super::*;
     use crate::actions::invoke::Invoke;
     use std::task::Poll;
-    use testing::{TestingFuturePoller, TrackableWaker};
+    use testing::prelude::*;
 
     async fn add_async<const N: usize>() -> ActionResult {
         Ok(())
