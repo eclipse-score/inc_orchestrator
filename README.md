@@ -1,7 +1,6 @@
 # inc_orchestrator
 Incubation repo for orchestration
 
-
 ## Getting started
 
 ### Using Cargo
