@@ -191,6 +191,7 @@ impl ProgramData {
 }
 
 #[cfg(test)]
+#[cfg(not(loom))]
 mod tests {
     // Tests are disabled in Miri due to limitations of using OS calls that are done in Iceroxy2 backend.
     // Currently we do not have any constructor that can inject IPC provider (subject to change in the near future).
@@ -285,7 +286,9 @@ mod tests {
         let config = DesignConfig::default();
         let mut design = Design::new(id, config);
 
-        let run_tag = design.register_invoke_fn(Tag::from_str_static("run_action"), action).unwrap();
+        let run_tag = design
+            .register_invoke_fn(Tag::from_str_static("run_action"), action)
+            .unwrap();
 
         let tag = run_tag.clone();
         design.add_program("first", move |design, builder| {
