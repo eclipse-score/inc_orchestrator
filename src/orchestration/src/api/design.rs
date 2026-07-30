@@ -169,7 +169,7 @@ impl Design {
         shutdown_events: &GrowableVec<ShutdownEvent>,
         container: &mut GrowableVec<Program>,
     ) -> Result<(), CommonErrors> {
-        while let Some(program_data) = self.programs.pop() {
+        while let Some(program_data) = self.programs.remove(0) {
             let mut builder = ProgramBuilder::new(program_data.0);
             (program_data.1)(&mut self, &mut builder)?;
             container.push(builder.build(shutdown_events, self.config())?);
@@ -275,6 +275,40 @@ mod tests {
         // Attempt to retrieve a non-existent orchestration tag
         let orchestration_tag = design.get_orchestration_tag(tag);
         assert!(orchestration_tag.is_err());
+    }
+
+    #[test]
+    fn into_programs_preserves_insertion_order() {
+        use crate::prelude::Invoke;
+
+        let id = Tag::from_str_static("design1");
+        let config = DesignConfig::default();
+        let mut design = Design::new(id, config);
+
+        let run_tag = design.register_invoke_fn(Tag::from_str_static("run_action"), action).unwrap();
+
+        let tag = run_tag.clone();
+        design.add_program("first", move |design, builder| {
+            builder.with_run_action(Invoke::from_tag(&tag, design.config()));
+            Ok(())
+        });
+        let tag = run_tag.clone();
+        design.add_program("second", move |design, builder| {
+            builder.with_run_action(Invoke::from_tag(&tag, design.config()));
+            Ok(())
+        });
+        design.add_program("third", move |design, builder| {
+            builder.with_run_action(Invoke::from_tag(&run_tag, design.config()));
+            Ok(())
+        });
+
+        let mut container = GrowableVec::default();
+        design.into_programs(&GrowableVec::default(), &mut container).unwrap();
+
+        assert_eq!(container.len(), 3);
+        assert_eq!(container[0].name(), "first");
+        assert_eq!(container[1].name(), "second");
+        assert_eq!(container[2].name(), "third");
     }
 
     // TODO add more tests once new Program skeleton is created

@@ -166,7 +166,7 @@ impl OrchestrationApi<_DesignTag> {
     /// Returns an error if there is an issue while creating the programs, such as a design not being valid.
     pub fn into_program_manager(mut self) -> Result<OrchProgramManager, CommonErrors> {
         let mut programs = GrowableVec::default();
-        while let Some(design) = self.designs.pop() {
+        while let Some(design) = self.designs.remove(0) {
             design.into_programs(&self.shutdown_events, &mut programs)?
         }
 
