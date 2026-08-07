@@ -10,11 +10,7 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 # *******************************************************************************
-module(
-    name = "score_orchestrator",
-    version = "0.0.0",
-    compatibility_level = 0,
-)
+module(name = "score_orchestrator")
 
 # Bazel global rules
 bazel_dep(name = "rules_python", version = "1.4.1")
