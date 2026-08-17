@@ -61,11 +61,9 @@ jobs:
           path: |
             ${{ env.BAZEL_OUTPUT_BASE }}/action_cache
             ${{ env.BAZEL_OUTPUT_BASE }}/bazel-out
-            ${{ env.BAZEL_OUTPUT_BASE }}/external
-            ${{ env.BAZEL_OUTPUT_BASE }}/execroot
-          key: bazel-ob-v2-${{ runner.os }}-${{ hashFiles('.bazelversion', 'MODULE.bazel', 'MODULE.bazel.lock', '**/*.bzl', 'Cargo.lock') }}
+          key: bazel-ob-v3-${{ runner.os }}-${{ hashFiles('.bazelversion', 'MODULE.bazel', 'MODULE.bazel.lock', '**/*.bzl', 'Cargo.lock') }}
           restore-keys: |
-            bazel-ob-v2-${{ runner.os }}-
+            bazel-ob-v3-${{ runner.os }}-
 
       - name: Build Test Scenarios with Bazel
         run: |
