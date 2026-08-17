@@ -17,7 +17,7 @@ module(
 )
 
 # Bazel global rules
-bazel_dep(name = "rules_python", version = "1.4.1")
+bazel_dep(name = "rules_python", version = "1.8.5")
 bazel_dep(name = "bazel_skylib", version = "1.7.1")
 bazel_dep(name = "rules_rust", version = "0.67.0")
 git_override(
@@ -35,17 +35,22 @@ bazel_dep(name = "platforms", version = "1.0.0")
 
 # S-CORE process rules
 bazel_dep(name = "score_bazel_platforms", version = "0.1.2")
-bazel_dep(name = "score_docs_as_code", version = "4.0.3")
+bazel_dep(name = "score_docs_as_code", version = "7.0.1")
 single_version_override(
     module_name = "score_docs_as_code",
-    version = "4.0.3",
+    version = "7.0.1",
 )
 
 bazel_dep(name = "score_tooling", version = "1.1.2")
 
 bazel_dep(name = "score_virtualization", version = "0.0.1", dev_dependency = True)
-bazel_dep(name = "score_process", version = "1.5.3", dev_dependency = True)
-bazel_dep(name = "score_platform", version = "0.5.5", dev_dependency = True)  # This is main score repo
+bazel_dep(name = "score_process", version = "2.0.3", dev_dependency = True)
+single_version_override(
+    module_name = "score_process",
+    version = "2.0.3",
+)
+
+bazel_dep(name = "score_platform", version = "0.6.4", dev_dependency = True)  # This is main score repo
 
 # Toolchains and extensions
 bazel_dep(name = "score_bazel_cpp_toolchains", version = "0.5.1", dev_dependency = True)
