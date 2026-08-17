@@ -24,9 +24,9 @@ git_override(
 
 bazel_dep(name = "score_rust_policies", version = "0.0.4", dev_dependency = True)
 
-bazel_dep(name = "rules_cc", version = "0.1.1")
-bazel_dep(name = "aspect_rules_lint", version = "2.0.0")
-bazel_dep(name = "buildifier_prebuilt", version = "7.3.1")
+bazel_dep(name = "rules_cc", version = "0.2.14")
+bazel_dep(name = "aspect_rules_lint", version = "2.3.0")
+bazel_dep(name = "buildifier_prebuilt", version = "8.5.1")
 bazel_dep(name = "platforms", version = "1.0.0")
 
 # S-CORE process rules
@@ -56,7 +56,7 @@ bazel_dep(name = "score_toolchains_rust", version = "0.8.0", dev_dependency = Tr
 bazel_dep(name = "custom_qemu", version = "1.0.0", dev_dependency = True)
 bazel_dep(name = "score_test_scenarios", version = "0.3.1", dev_dependency = True)
 
-bazel_dep(name = "googletest", version = "1.14.0")
+bazel_dep(name = "googletest", version = "1.14.0.bcr.1")
 
 git_override(
     module_name = "score_virtualization",
