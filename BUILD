@@ -80,10 +80,12 @@ exports_files([
 # Creates all documentation targets:
 # - `:docs` for building documentation at build-time
 docs(
-    data = [
-        # "@score_platform//:needs_json",
-        # "@score_process//:needs_json",
+    external_needs = [
+        "@score_platform//:needs_json_file",
+        "@score_process//:needs_json_file",
     ],
+    project = "Baselibs",
+    project_url = "https://github.com/eclipse-score/baselibs",
     source_dir = "docs",
 )
 
