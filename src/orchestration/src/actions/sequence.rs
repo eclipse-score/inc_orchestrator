@@ -90,7 +90,7 @@ impl SequenceBuilder {
         Box::new(Sequence {
             actions,
             base: ActionBaseMeta {
-                tag: Tag::from_str_static(DEFAULT_TAG),
+                tag: super::action::next_unique_action_tag(DEFAULT_TAG),
                 reusable_future_pool,
             },
             futures_vec_pool,
@@ -345,5 +345,17 @@ mod tests {
         // Execute the sequence
         let mut mock = OrchTestingPoller::new(seq.try_execute().unwrap());
         assert_eq!(Poll::Ready(Err(ActionExecError::NonRecoverableFailure)), mock.poll());
+    }
+
+    #[test]
+    fn test_unique_tags_for_actions() {
+        let seq = kyron_testing::prelude::Sequence::new();
+        let mock1 = Box::new(MockActionBuilder::<()>::new().in_sequence(&seq).build());
+        let mock2 = Box::new(MockActionBuilder::<()>::new().in_sequence(&seq).build());
+
+        let seq1 = SequenceBuilder::new().with_step(mock1).build();
+        let seq2 = SequenceBuilder::new().with_step(mock2).build();
+
+        assert_ne!(seq1.base.tag, seq2.base.tag);
     }
 }

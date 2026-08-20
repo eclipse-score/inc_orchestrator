@@ -195,10 +195,11 @@ impl InvokeFn {
         match instant_or_spawn {
             InstantOrSpawn::None => Ok(()),
             InstantOrSpawn::Instant(action) => invoke_result_into_action_result(action()),
-            InstantOrSpawn::Spawn(future, worker_id) => match spawn_from_reusable_on_dedicated(future, worker_id).await
-            {
-                Ok(result) => result,
-                Err(_) => Err(ActionExecError::Internal),
+            InstantOrSpawn::Spawn(future, worker_id) => {
+                match spawn_from_reusable_on_dedicated(future, worker_id).await {
+                    Ok(result) => result,
+                    Err(_) => Err(ActionExecError::Internal),
+                }
             },
         }
     }
@@ -254,10 +255,11 @@ where
         match instant_or_spawn {
             InstantOrSpawn::None => Ok(()),
             InstantOrSpawn::Instant(action) => invoke_result_into_action_result(action.await),
-            InstantOrSpawn::Spawn(future, worker_id) => match spawn_from_reusable_on_dedicated(future, worker_id).await
-            {
-                Ok(result) => result,
-                Err(_) => Err(ActionExecError::Internal),
+            InstantOrSpawn::Spawn(future, worker_id) => {
+                match spawn_from_reusable_on_dedicated(future, worker_id).await {
+                    Ok(result) => result,
+                    Err(_) => Err(ActionExecError::Internal),
+                }
             },
         }
     }
@@ -324,10 +326,11 @@ impl<T: 'static + Send> InvokeMethod<T> {
                 let mut object = object.lock().unwrap();
                 invoke_result_into_action_result(method(&mut object))
             },
-            InstantOrSpawn::Spawn(future, worker_id) => match spawn_from_reusable_on_dedicated(future, worker_id).await
-            {
-                Ok(result) => result,
-                Err(_) => Err(ActionExecError::Internal),
+            InstantOrSpawn::Spawn(future, worker_id) => {
+                match spawn_from_reusable_on_dedicated(future, worker_id).await {
+                    Ok(result) => result,
+                    Err(_) => Err(ActionExecError::Internal),
+                }
             },
         }
     }
@@ -395,10 +398,11 @@ where
         match instant_or_spawn {
             InstantOrSpawn::None => Ok(()),
             InstantOrSpawn::Instant(future) => invoke_result_into_action_result(future.await),
-            InstantOrSpawn::Spawn(future, worker_id) => match spawn_from_reusable_on_dedicated(future, worker_id).await
-            {
-                Ok(result) => result,
-                Err(_) => Err(ActionExecError::Internal),
+            InstantOrSpawn::Spawn(future, worker_id) => {
+                match spawn_from_reusable_on_dedicated(future, worker_id).await {
+                    Ok(result) => result,
+                    Err(_) => Err(ActionExecError::Internal),
+                }
             },
         }
     }

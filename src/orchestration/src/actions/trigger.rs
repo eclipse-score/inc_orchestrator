@@ -19,7 +19,6 @@ use crate::{
 };
 
 use super::action::{ActionBaseMeta, ReusableBoxFutureResult};
-use crate::common::tag::Tag;
 
 use kyron::futures::reusable_box_future::*;
 
@@ -71,7 +70,7 @@ impl<T: NotifierTrait + Send> Trigger<T> {
 
         Box::new(Self {
             base: ActionBaseMeta {
-                tag: Tag::from_str_static(DEFAULT_TAG),
+                tag: super::action::next_unique_action_tag(DEFAULT_TAG),
                 reusable_future_pool: ReusableBoxFuturePool::for_value(future_pool_size, notifier.notify(0)),
             },
             notifier,

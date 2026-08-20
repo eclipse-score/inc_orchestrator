@@ -75,7 +75,7 @@ impl ConcurrencyBuilder {
 
         Box::new(Concurrency {
             base: ActionBaseMeta {
-                tag: "orch::internal::concurrency".into(),
+                tag: super::action::next_unique_action_tag("orch::internal::concurrency"),
                 reusable_future_pool: Concurrency::create_reusable_future_pool(
                     design.config.max_concurrent_action_executions,
                 ),

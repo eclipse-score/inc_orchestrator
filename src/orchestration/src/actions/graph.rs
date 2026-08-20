@@ -119,7 +119,7 @@ impl LocalGraphActionBuilder {
         // Create and return the LocalGraphAction
         Box::new(LocalGraphAction {
             base: ActionBaseMeta {
-                tag: "orch::internal::graph".into(),
+                tag: super::action::next_unique_action_tag("orch::internal::graph"),
                 reusable_future_pool: LocalGraphAction::create_reusable_future_pool(
                     design.config.max_concurrent_action_executions,
                 ),
