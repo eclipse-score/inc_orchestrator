@@ -71,3 +71,6 @@ tests/test_cases/*.xml
 *.orig
 .venv_docs
 ubproject.toml
+
+# LLVM coverage report output
+/coverage_artifact/
