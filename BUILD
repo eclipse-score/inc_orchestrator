@@ -36,6 +36,7 @@ copyright_checker(
         "virtualization",
     ],
     config = "@score_tooling//cr_checker/resources:config",
+    exclusion = "//:cr_checker_exclusion",
     template = "@score_tooling//cr_checker/resources:templates",
     visibility = ["//visibility:public"],
 )
