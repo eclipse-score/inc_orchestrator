@@ -126,5 +126,9 @@
   {
     "version": "pr-126",
     "url": "https://eclipse-score.github.io/orchestrator/pr-126/"
+  },
+  {
+    "version": "pr-127",
+    "url": "https://eclipse-score.github.io/orchestrator/pr-127/"
   }
 ]
