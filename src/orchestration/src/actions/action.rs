@@ -148,3 +148,10 @@ impl ActionMeta {
         *self = ActionMeta::Empty;
     }
 }
+
+pub(crate) fn next_unique_action_tag(prefix: &str) -> Tag {
+    use ::core::sync::atomic::{AtomicUsize, Ordering};
+    static COUNTER: AtomicUsize = AtomicUsize::new(0);
+    let id = COUNTER.fetch_add(1, Ordering::SeqCst);
+    format!("{}::{}", prefix, id).into()
+}

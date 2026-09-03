@@ -167,7 +167,7 @@ impl CatchBuilder {
 
         Box::new(Catch {
             base: ActionBaseMeta {
-                tag: "orch::internal::catch_action".into(),
+                tag: crate::actions::action::next_unique_action_tag("orch::internal::catch_action"),
                 reusable_future_pool: ReusableBoxFuturePool::for_value(
                     design.config.max_concurrent_action_executions,
                     Catch::execute_impl(action, HandlerType::None, self.filters),

@@ -69,7 +69,7 @@ impl IfElse {
 
         Box::new(IfElseArc {
             base: ActionBaseMeta {
-                tag: TAG.into(),
+                tag: crate::actions::action::next_unique_action_tag(TAG),
                 reusable_future_pool: IfElseArc::<C>::create_future_pool(
                     IfElseArc::<C>::choose_branch,
                     config.max_concurrent_action_executions,
@@ -94,7 +94,7 @@ impl IfElse {
 
         Box::new(IfElseArcMutex {
             base: ActionBaseMeta {
-                tag: TAG.into(),
+                tag: crate::actions::action::next_unique_action_tag(TAG),
                 reusable_future_pool: IfElseArcMutex::<C>::create_future_pool(
                     IfElseArcMutex::<C>::choose_branch,
                     config.max_concurrent_action_executions,

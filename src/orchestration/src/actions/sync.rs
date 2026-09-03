@@ -12,13 +12,13 @@
 // *******************************************************************************
 
 use super::action::{ActionBaseMeta, ReusableBoxFutureResult};
+use crate::events::event_traits::ListenerTrait;
 use crate::{
     actions::action::ActionTrait,
     api::design::Design,
     common::{orch_tag::OrchestrationTag, DesignConfig},
     events::events_provider::EventActionType,
 };
-use crate::{common::tag::Tag, events::event_traits::ListenerTrait};
 use kyron::futures::reusable_box_future::*;
 
 pub struct SyncBuilder;
@@ -69,7 +69,7 @@ impl<T: ListenerTrait + Send> Sync<T> {
 
         Box::new(Self {
             base: ActionBaseMeta {
-                tag: Tag::from_str_static(DEFAULT_TAG),
+                tag: super::action::next_unique_action_tag(DEFAULT_TAG),
                 reusable_future_pool: ReusableBoxFuturePool::for_value(future_pool_size, listener.next()),
             },
             listener,

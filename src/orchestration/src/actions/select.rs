@@ -58,7 +58,7 @@ impl SelectBuilder {
 
         Box::new(Select {
             base: ActionBaseMeta {
-                tag: "orch::internal::select".into(),
+                tag: super::action::next_unique_action_tag("orch::internal::select"),
                 reusable_future_pool: ReusableBoxFuturePool::<ActionResult>::for_value(
                     design.config.max_concurrent_action_executions,
                     SelectFuture::new(
