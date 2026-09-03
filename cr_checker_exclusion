@@ -1,0 +1,10 @@
+.github/ISSUE_TEMPLATE/bug_fix.md
+.github/ISSUE_TEMPLATE/bug_report.md
+.github/ISSUE_TEMPLATE/improvement.md
+.github/PULL_REQUEST_TEMPLATE/bug_fix.md
+.github/PULL_REQUEST_TEMPLATE/improvement.md
+.github/pull_request_template.md
+internal_docs/qnx.md
+src/orchestration/doc/features.md
+src/orchestration/doc/orch_design.md
+tests/README.md
